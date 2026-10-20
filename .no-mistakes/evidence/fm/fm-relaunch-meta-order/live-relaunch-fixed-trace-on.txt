@@ -1,0 +1,45 @@
+BEFORE relaunch: armed PR poll authenticates: yes
+--- record before relaunch (/tmp/fm-lab.q0K9Dz/state/rlv22520.meta) ---
+window=labses:fm-rlv22520
+endpoint_task_id=rlv22520
+worktree=/tmp/fm-lab.q0K9Dz/wt-rlv22520
+project=/tmp/fm-lab.q0K9Dz/projects/demo
+harness=claude
+kind=ship
+mode=no-mistakes
+yolo=off
+tasktmp=/tmp/fm-rlv22520
+model=default
+effort=default
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+--- $ bin/fm-control.sh rlv22520 relaunch --note 'continuing after PR open' ---
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-lab.q0K9Dz
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-lab.q0K9Dz
+warning: /tmp/fm-lab.q0K9Dz/data/rlv22520/launch-brief.md records no ship branch; defaulting to legacy branch fm/rlv22520
+warning: /tmp/fm-lab.q0K9Dz/data/rlv22520/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched rlv22520 harness=claude from=claude model=default effort=default backend=tmux endpoint=labses:fm-rlv22520 worktree=/tmp/fm-lab.q0K9Dz/wt-rlv22520
+relaunch exit code: 0
+--- record after relaunch ---
+window=labses:fm-rlv22520
+endpoint_task_id=rlv22520
+worktree=/tmp/fm-lab.q0K9Dz/wt-rlv22520
+project=/tmp/fm-lab.q0K9Dz/projects/demo
+harness=claude
+kind=ship
+mode=no-mistakes
+yolo=off
+branch=fm/rlv22520
+tasktmp=/tmp/fm-rlv22520
+model=default
+effort=default
+busy_gen=g1792505576.1463560.9852
+spawn_gen=s1792505576.1462772.16425
+control_relaunch_tx=1462253.20261020T141254Z.3080
+traceparent=00-ce3f87af9c1e462714df645322eb50c3-6cd857d7d9a7550a-01
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+--- live tmux pane after relaunch: pane command ---
+labses:fm-rlv22520 claude
+AFTER relaunch: armed PR poll authenticates: yes (pr=https://github.com/example/repo/pull/47)
+last two non-x_ keys: pr pr_head 

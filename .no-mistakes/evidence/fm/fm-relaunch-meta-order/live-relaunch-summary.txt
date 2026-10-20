@@ -1,0 +1,38 @@
+=== base-a65dcee-trace-off
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+relaunch exit code: 0
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+control_relaunch_tx=1477218.20261020T141320Z.31825
+AFTER relaunch: armed PR poll authenticates: NO
+last two non-x_ keys: pr_head control_relaunch_tx 
+=== base-a65dcee-trace-on
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+relaunch exit code: 0
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+control_relaunch_tx=1486415.20261020T141328Z.7460
+traceparent=00-8cc455ed025b23b27f981ec9e385553c-828d6e06b5605c55-01
+AFTER relaunch: armed PR poll authenticates: NO
+last two non-x_ keys: control_relaunch_tx traceparent 
+=== fixed-trace-off
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+relaunch exit code: 0
+control_relaunch_tx=1458558.20261020T141249Z.16174
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+AFTER relaunch: armed PR poll authenticates: yes (pr=https://github.com/example/repo/pull/47)
+last two non-x_ keys: pr pr_head 
+=== fixed-trace-on
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+relaunch exit code: 0
+control_relaunch_tx=1462253.20261020T141254Z.3080
+traceparent=00-ce3f87af9c1e462714df645322eb50c3-6cd857d7d9a7550a-01
+pr=https://github.com/example/repo/pull/47
+pr_head=0123456789abcdef0123456789abcdef01234567
+AFTER relaunch: armed PR poll authenticates: yes (pr=https://github.com/example/repo/pull/47)
+last two non-x_ keys: pr pr_head 
