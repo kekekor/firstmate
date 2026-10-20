@@ -495,11 +495,15 @@ test_relaunch_preserves_durable_task_metadata() {
 # fm_pr_metadata_identity_parse refuses any non-x_* key written after pr=, so
 # a relaunch must keep the pr=/pr_head= tail last or the watcher refuses the
 # task's PR poll and merge detection stops.
-test_relaunch_keeps_an_armed_pr_poll_authenticating() {
-  local dir out rc state poll="$ROOT/bin/fm-pr-poll.sh"
+test_relaunch_keeps_an_armed_pr_poll_authenticating() {  # [trace]
+  local trace=${1:-} dir out rc state poll="$ROOT/bin/fm-pr-poll.sh"
   dir=$(new_case pr-poll rl47)
   add_ship_task "$dir" rl47 claude
   state="$dir/home/state"
+  if [ -n "$trace" ]; then
+    printf '%s\n' "$$" > "$state/.lock"
+    printf '%s on\n' "$$" > "$state/.trace-context-effective"
+  fi
   {
     printf '%s\n' 'pr=https://github.com/example/repo/pull/47'
     printf '%s\n' 'pr_head=0123456789abcdef0123456789abcdef01234567'
@@ -519,7 +523,13 @@ test_relaunch_keeps_an_armed_pr_poll_authenticating() {
     || fail "a relaunch broke PR poll authentication:"$'\n'"$(cat "$state/rl47.meta")"
   [ "$FM_PR_META_URL" = https://github.com/example/repo/pull/47 ] \
     || fail "the relaunched record should still name the task PR"
-  pass "fm-control relaunch: an armed PR poll still authenticates after the relaunch"
+  if [ -n "$trace" ]; then
+    fm_trace_context_valid "$(meta_field "$dir" rl47 traceparent)" \
+      || fail "the trace-enabled relaunch should record its trace carrier"
+    pass "fm-control relaunch: an armed PR poll still authenticates after a trace-enabled relaunch"
+  else
+    pass "fm-control relaunch: an armed PR poll still authenticates after the relaunch"
+  fi
 }
 
 test_relaunch_serializes_concurrent_durable_metadata_publication() {
@@ -2813,6 +2823,7 @@ test_relaunch_refuses_before_exit_when_the_composer_state_is_unproven
 test_relaunch_from_linked_home_preserves_recorded_worktree
 test_relaunch_preserves_durable_task_metadata
 test_relaunch_keeps_an_armed_pr_poll_authenticating
+test_relaunch_keeps_an_armed_pr_poll_authenticating trace
 test_relaunch_serializes_concurrent_durable_metadata_publication
 test_disabled_relaunch_clears_prior_trace_context
 test_relaunch_appends_the_progress_note_to_the_instructions
